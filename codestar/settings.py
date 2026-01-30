@@ -27,9 +27,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-bnbc81bb2l8s6bumd3q-mw(u+chh-q85+%olvim3$93-m-+bj&'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = "DEVELOPMENT" in os.environ
 
-ALLOWED_HOSTS = ['.herokuapp.com', 'localhost',]
+ALLOWED_HOSTS = ['.herokuapp.com', 'localhost', '127.0.0.1',]
 
 
 # Application definition
@@ -88,6 +88,11 @@ WSGI_APPLICATION = 'codestar.wsgi.application'
 DATABASES = {
     'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
 }
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://*.codeinstitute-ide.net/",
+    "https://*.herokuapp.com"
+]
 
 
 # Password validation
