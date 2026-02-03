@@ -1,19 +1,30 @@
-from django.shortcuts import render
-#from django.http import HttpResponse
-#from .models import Post
-
-#def blog_home(request):
-#    posts = Post.objects.filter(status=1).order_by('-created_on')
-#    output = '<h1>CodeStar Blog</h1>'
-#    for post in posts:
-#        output += f'<h2>{post.title}</h2>'
-#       output += f'<p>By {post.author} on {post.created_on}</p>'
-#        output += f'<p>{post.excerpt}</p>'
-#       output += '<hr>'
-#    return HttpResponse(output)
+from django.shortcuts import render, get_object_or_404
 
 from django.views import generic
 from .models import Post
+
+def post_detail(request, slug):
+    """
+    Display an individual :model:`blog.Post`.
+
+    **Context**
+
+    ``post``
+        An instance of :model:`blog.Post`.
+
+    **Template:**
+
+    :template:`blog/post_detail.html`
+    """
+
+    queryset = Post.objects.filter(status=1)
+    post = get_object_or_404(queryset, slug=slug)
+
+    return render(
+        request,
+        "blog/post_detail.html",
+        {"post": post},
+    )
 
 # Create your views here.
 class PostList(generic.ListView):
